@@ -11,11 +11,6 @@ var io = new Server(server);
 
 app.use(express.static(path.join(__dirname, 'src')));
 
-/*app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
-});*/
-
-
 io.on('connection', (socket)=>{
     console.log("un usuario se a conectado");
     socket.on('disconnect', () => {
@@ -24,11 +19,9 @@ io.on('connection', (socket)=>{
 
     socket.on('mensaje', (msg)=>{
         console.log("¿Prender camara? "+msg);
-        //io.broadcast.emit('mensaje', msg);
-        socket.broadcast.emit(msg);
+        io.emit('mensaje', msg);
     });
-
-})
+});
 
 server.listen(3000, ()=>{
     console.log('listen on *:3000');
